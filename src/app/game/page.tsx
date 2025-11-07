@@ -11,6 +11,7 @@ import Drum from '@/components/game/Drum';
 import NoteComponent from '@/components/game/NoteComponent';
 import ScoreDisplay from '@/components/game/ScoreDisplay';
 import JudgementDisplay from '@/components/game/JudgementDisplay';
+import PauseMenu from '@/components/game/PauseMenu';
 import { Song, Difficulty, GameState, NoteType } from '@/types/game';
 import { GAME_CONFIG } from '@/constants/gameConfig';
 
@@ -93,6 +94,38 @@ function GamePageContent() {
     gameLoop.endGame();
     router.push('/');
   };
+
+  const handlePause = () => {
+    gameLoop.pauseGame();
+    audio.pause();
+  };
+
+  const handleResume = () => {
+    gameLoop.resumeGame();
+    audio.play();
+  };
+
+  const handleRetry = () => {
+    audio.stop();
+    router.push(`/game?song=${searchParams.get('song')}&difficulty=${searchParams.get('difficulty')}`);
+  };
+
+  // ESCキーでポーズ/再開
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && gameLoop.gameState.isPlaying) {
+        e.preventDefault();
+        if (gameLoop.gameState.isPaused) {
+          handleResume();
+        } else {
+          handlePause();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [gameLoop.gameState.isPlaying, gameLoop.gameState.isPaused]);
 
   // キーボード入力
   useInputHandler(handleInput);
@@ -212,6 +245,15 @@ function GamePageContent() {
           🎮 ゲームパッド対応 | ドン: A/B/下/L1 | カッ: X/Y/上/R1
         </div>
       </div>
+
+      {/* ポーズメニュー */}
+      {gameLoop.gameState.isPaused && (
+        <PauseMenu
+          onResume={handleResume}
+          onRetry={handleRetry}
+          onHome={handleBackToHome}
+        />
+      )}
     </div>
   );
 }

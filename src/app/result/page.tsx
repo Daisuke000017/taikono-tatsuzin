@@ -41,7 +41,30 @@ function ResultPageContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-8 relative">
+      {/* ホームに戻るボタン */}
+      <button
+        onClick={() => router.push('/')}
+        className="absolute top-4 left-4 z-50 bg-black/70 hover:bg-black/90 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+        aria-label="ホームに戻る"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        <span className="text-sm font-bold">ホーム</span>
+      </button>
+
       {/* リザルトカード */}
       <div className="max-w-2xl w-full bg-gradient-to-br from-purple-900/50 to-pink-900/50 backdrop-blur-lg rounded-2xl p-12 shadow-2xl">
         {/* ヘッダー */}
@@ -136,10 +159,10 @@ function ResultPageContent() {
             ランキングに保存
           </button>
           <button
-            onClick={() => router.push('/')}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105"
+            onClick={() => router.push(`/game?song=${songId}&difficulty=${difficulty}`)}
+            className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105"
           >
-            タイトルに戻る
+            リトライ
           </button>
         </div>
       </div>
