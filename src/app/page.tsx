@@ -36,6 +36,18 @@ export default function HomePage() {
       artist: 'Happy Pop',
       coverImage: '/assets/images/cover-03.svg',
     },
+    {
+      id: 'sample-04',
+      title: 'ロックビート',
+      artist: 'Rock Master',
+      coverImage: '/assets/images/cover-04.svg',
+    },
+    {
+      id: 'sample-05',
+      title: '静かなる旋律',
+      artist: 'Peaceful Journey',
+      coverImage: '/assets/images/cover-05.svg',
+    },
   ];
 
   const handleStart = (songId: string) => {
