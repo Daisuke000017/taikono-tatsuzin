@@ -20,6 +20,9 @@ const config: Config = {
         'ripple': 'ripple 0.6s ease-out',
         'note-hit': 'noteHit 0.3s ease-out',
         'drum-hit': 'drumHit 0.15s ease-out',
+        'particle-burst': 'particleBurst 0.6s ease-out forwards',
+        'combo-milestone': 'comboMilestone 2s ease-out forwards',
+        'firework': 'firework 1s ease-out forwards',
       },
       keyframes: {
         ripple: {
@@ -35,6 +38,44 @@ const config: Config = {
           '0%': { transform: 'scale(1)' },
           '50%': { transform: 'scale(1.1)' },
           '100%': { transform: 'scale(1)' },
+        },
+        particleBurst: {
+          '0%': {
+            transform: 'translate(-50%, -50%) translate(0, 0) scale(1)',
+            opacity: '1',
+          },
+          '100%': {
+            transform: 'translate(-50%, -50%) translate(var(--particle-vx), var(--particle-vy)) scale(0)',
+            opacity: '0',
+          },
+        },
+        comboMilestone: {
+          '0%': {
+            transform: 'scale(0)',
+            opacity: '0',
+          },
+          '30%': {
+            transform: 'scale(1.2)',
+            opacity: '1',
+          },
+          '70%': {
+            transform: 'scale(1)',
+            opacity: '1',
+          },
+          '100%': {
+            transform: 'scale(0.8)',
+            opacity: '0',
+          },
+        },
+        firework: {
+          '0%': {
+            transform: 'translate(-50%, -50%) translate(0, 0) scale(1)',
+            opacity: '1',
+          },
+          '100%': {
+            transform: 'translate(-50%, -50%) translate(var(--firework-x), var(--firework-y)) scale(0)',
+            opacity: '0',
+          },
         },
       },
     },

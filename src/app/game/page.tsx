@@ -12,6 +12,8 @@ import NoteComponent from '@/components/game/NoteComponent';
 import ScoreDisplay from '@/components/game/ScoreDisplay';
 import JudgementDisplay from '@/components/game/JudgementDisplay';
 import PauseMenu from '@/components/game/PauseMenu';
+import HitEffect from '@/components/game/HitEffect';
+import ComboMilestoneEffect from '@/components/game/ComboMilestoneEffect';
 import { Song, Difficulty, GameState, NoteType } from '@/types/game';
 import { GAME_CONFIG } from '@/constants/gameConfig';
 
@@ -24,6 +26,9 @@ function GamePageContent() {
   const [drumHit, setDrumHit] = useState<{ isHit: boolean; type?: NoteType }>({
     isHit: false,
   });
+  const [hitEffect, setHitEffect] = useState<{ show: boolean; type: NoteType } | null>(null);
+  const [comboMilestone, setComboMilestone] = useState<number | null>(null);
+  const [previousCombo, setPreviousCombo] = useState(0);
 
   const audio = useAudioEngine();
 
@@ -86,6 +91,11 @@ function GamePageContent() {
       // 太鼓ヒットアニメーション
       setDrumHit({ isHit: true, type: noteType });
       setTimeout(() => setDrumHit({ isHit: false }), 150);
+
+      // Perfect判定の場合のみヒットエフェクトを表示
+      if (result.type === 'perfect') {
+        setHitEffect({ show: true, type: noteType });
+      }
     }
   };
 
@@ -109,6 +119,22 @@ function GamePageContent() {
     audio.stop();
     router.push(`/game?song=${searchParams.get('song')}&difficulty=${searchParams.get('difficulty')}`);
   };
+
+  // コンボマイルストーン検出
+  useEffect(() => {
+    const combo = gameLoop.gameState.combo;
+
+    // マイルストーンチェック（50, 100, 200）
+    if (combo >= 50 && previousCombo < 50 && combo === 50) {
+      setComboMilestone(50);
+    } else if (combo >= 100 && previousCombo < 100 && combo === 100) {
+      setComboMilestone(100);
+    } else if (combo >= 200 && previousCombo < 200 && combo === 200) {
+      setComboMilestone(200);
+    }
+
+    setPreviousCombo(combo);
+  }, [gameLoop.gameState.combo, previousCombo]);
 
   // ESCキーでポーズ/再開
   useEffect(() => {
@@ -252,6 +278,31 @@ function GamePageContent() {
           onResume={handleResume}
           onRetry={handleRetry}
           onHome={handleBackToHome}
+        />
+      )}
+
+      {/* ヒットエフェクト */}
+      {hitEffect && hitEffect.show && (
+        <div
+          className="absolute z-30"
+          style={{
+            left: `${GAME_CONFIG.DRUM_POSITION_X}px`,
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <HitEffect
+            noteType={hitEffect.type}
+            onComplete={() => setHitEffect(null)}
+          />
+        </div>
+      )}
+
+      {/* コンボマイルストーンエフェクト */}
+      {comboMilestone && (
+        <ComboMilestoneEffect
+          combo={comboMilestone}
+          onComplete={() => setComboMilestone(null)}
         />
       )}
     </div>
