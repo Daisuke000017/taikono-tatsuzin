@@ -7,6 +7,8 @@ export class AudioEngine {
   private startTime: number = 0;
   private pausedAt: number = 0;
   private isPlaying: boolean = false;
+  private silentMode: boolean = false; // 音楽ファイルなしモード
+  private silentStartTime: number = 0; // サイレントモード用の開始時刻
 
   // 効果音用のオーディオバッファ
   private hitSounds: Map<NoteType, AudioBuffer> = new Map();
@@ -29,13 +31,21 @@ export class AudioEngine {
 
     try {
       const response = await fetch(audioFile);
+      if (!response.ok) {
+        // 404などの場合、サイレントモードで続行
+        console.warn(`Audio file not found: ${audioFile}, switching to silent mode`);
+        this.silentMode = true;
+        return;
+      }
       const arrayBuffer = await response.arrayBuffer();
       this.mainAudioBuffer = await this.audioContext.decodeAudioData(
         arrayBuffer
       );
+      this.silentMode = false;
     } catch (error) {
-      console.error('Failed to load main audio:', error);
-      throw error;
+      console.warn('Failed to load main audio, switching to silent mode:', error);
+      this.silentMode = true;
+      // エラーをスローせずにサイレントモードで続行
     }
   }
 
@@ -63,8 +73,16 @@ export class AudioEngine {
    * メイン楽曲の再生
    */
   play(): void {
-    if (!this.audioContext || !this.mainAudioBuffer) {
-      console.warn('Audio not loaded');
+    if (!this.audioContext) {
+      console.warn('AudioContext not initialized');
+      return;
+    }
+
+    // サイレントモードの場合は時間計測のみ開始
+    if (this.silentMode || !this.mainAudioBuffer) {
+      this.silentStartTime = performance.now() - (this.pausedAt * 1000);
+      this.isPlaying = true;
+      console.log('Playing in silent mode (no audio file)');
       return;
     }
 
@@ -89,7 +107,18 @@ export class AudioEngine {
    * 一時停止
    */
   pause(): void {
-    if (!this.audioContext || !this.mainAudioSource || !this.isPlaying) {
+    if (!this.isPlaying) {
+      return;
+    }
+
+    // サイレントモードの場合
+    if (this.silentMode || !this.mainAudioBuffer) {
+      this.pausedAt = (performance.now() - this.silentStartTime) / 1000;
+      this.isPlaying = false;
+      return;
+    }
+
+    if (!this.audioContext || !this.mainAudioSource) {
       return;
     }
 
@@ -109,6 +138,7 @@ export class AudioEngine {
 
     this.startTime = 0;
     this.pausedAt = 0;
+    this.silentStartTime = 0;
     this.isPlaying = false;
   }
 
@@ -116,6 +146,16 @@ export class AudioEngine {
    * 現在の再生時間を取得（ミリ秒）
    */
   getCurrentTime(): number {
+    // サイレントモードの場合
+    if (this.silentMode || !this.mainAudioBuffer) {
+      if (this.isPlaying) {
+        return performance.now() - this.silentStartTime;
+      } else {
+        return this.pausedAt * 1000;
+      }
+    }
+
+    // 通常モード
     if (!this.audioContext) return 0;
 
     if (this.isPlaying) {
@@ -215,7 +255,8 @@ export class AudioEngine {
    * 音声の読み込み完了チェック
    */
   isLoaded(): boolean {
-    return this.mainAudioBuffer !== null;
+    // サイレントモードでも読み込み完了とみなす
+    return this.mainAudioBuffer !== null || this.silentMode;
   }
 
   /**

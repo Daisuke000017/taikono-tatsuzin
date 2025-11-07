@@ -27,6 +27,8 @@ export function useAudioEngine() {
       setIsLoaded(true);
     } catch (error) {
       console.error('Failed to load audio:', error);
+      // エラーが発生してもゲームを続行可能にする
+      setIsLoaded(true);
     }
   };
 
