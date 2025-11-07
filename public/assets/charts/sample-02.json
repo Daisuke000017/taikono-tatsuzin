@@ -1,0 +1,105 @@
+{
+  "id": "sample-02",
+  "title": "サンプル曲 2",
+  "artist": "Electronic Beats",
+  "bpm": 140,
+  "offset": 0,
+  "audioFile": "/assets/audio/sample-02.mp3",
+  "coverImage": "/assets/images/cover-02.svg",
+  "difficulties": {
+    "easy": {
+      "level": 3,
+      "maxCombo": 50,
+      "notes": [
+        { "id": "e1", "time": 1714, "type": "don" },
+        { "id": "e2", "time": 2571, "type": "ka" },
+        { "id": "e3", "time": 3429, "type": "don" },
+        { "id": "e4", "time": 4286, "type": "don" },
+        { "id": "e5", "time": 5143, "type": "ka" },
+        { "id": "e6", "time": 6000, "type": "don" },
+        { "id": "e7", "time": 6857, "type": "ka" },
+        { "id": "e8", "time": 7714, "type": "don" },
+        { "id": "e9", "time": 8571, "type": "ka" },
+        { "id": "e10", "time": 9429, "type": "don" },
+        { "id": "e11", "time": 10286, "type": "don" },
+        { "id": "e12", "time": 11143, "type": "ka" },
+        { "id": "e13", "time": 12000, "type": "don" },
+        { "id": "e14", "time": 12857, "type": "ka" },
+        { "id": "e15", "time": 13714, "type": "don" },
+        { "id": "e16", "time": 14571, "type": "don" },
+        { "id": "e17", "time": 15429, "type": "ka" },
+        { "id": "e18", "time": 16286, "type": "don" },
+        { "id": "e19", "time": 17143, "type": "ka" },
+        { "id": "e20", "time": 18000, "type": "don" },
+        { "id": "e21", "time": 18857, "type": "don" },
+        { "id": "e22", "time": 19714, "type": "ka" },
+        { "id": "e23", "time": 20571, "type": "don" },
+        { "id": "e24", "time": 21429, "type": "ka" },
+        { "id": "e25", "time": 22286, "type": "don" },
+        { "id": "e26", "time": 23143, "type": "don" },
+        { "id": "e27", "time": 24000, "type": "ka" },
+        { "id": "e28", "time": 24857, "type": "don" },
+        { "id": "e29", "time": 25714, "type": "ka" },
+        { "id": "e30", "time": 26571, "type": "don" },
+        { "id": "e31", "time": 27429, "type": "don" },
+        { "id": "e32", "time": 28286, "type": "ka" },
+        { "id": "e33", "time": 29143, "type": "don" },
+        { "id": "e34", "time": 30000, "type": "ka" },
+        { "id": "e35", "time": 30857, "type": "don" },
+        { "id": "e36", "time": 31714, "type": "don" },
+        { "id": "e37", "time": 32571, "type": "ka" },
+        { "id": "e38", "time": 33429, "type": "don" },
+        { "id": "e39", "time": 34286, "type": "ka" },
+        { "id": "e40", "time": 35143, "type": "don" },
+        { "id": "e41", "time": 36000, "type": "don" },
+        { "id": "e42", "time": 36857, "type": "ka" },
+        { "id": "e43", "time": 37714, "type": "don" },
+        { "id": "e44", "time": 38571, "type": "ka" },
+        { "id": "e45", "time": 39429, "type": "don" },
+        { "id": "e46", "time": 40286, "type": "don" },
+        { "id": "e47", "time": 41143, "type": "ka" },
+        { "id": "e48", "time": 42000, "type": "don" },
+        { "id": "e49", "time": 42857, "type": "ka" },
+        { "id": "e50", "time": 43714, "type": "don" }
+      ]
+    },
+    "normal": {
+      "level": 5,
+      "maxCombo": 100,
+      "notes": [
+        { "id": "n1", "time": 1714, "type": "don" },
+        { "id": "n2", "time": 2143, "type": "don" },
+        { "id": "n3", "time": 2571, "type": "ka" },
+        { "id": "n4", "time": 3000, "type": "don" },
+        { "id": "n5", "time": 3429, "type": "don" },
+        { "id": "n6", "time": 3857, "type": "ka" },
+        { "id": "n7", "time": 4286, "type": "ka" },
+        { "id": "n8", "time": 4714, "type": "don" },
+        { "id": "n9", "time": 5143, "type": "don" },
+        { "id": "n10", "time": 5571, "type": "ka" }
+      ]
+    },
+    "hard": {
+      "level": 8,
+      "maxCombo": 180,
+      "notes": [
+        { "id": "h1", "time": 1714, "type": "don" },
+        { "id": "h2", "time": 1928, "type": "don" },
+        { "id": "h3", "time": 2143, "type": "ka" },
+        { "id": "h4", "time": 2357, "type": "don" },
+        { "id": "h5", "time": 2571, "type": "don" }
+      ]
+    },
+    "oni": {
+      "level": 10,
+      "maxCombo": 300,
+      "notes": [
+        { "id": "o1", "time": 1714, "type": "don" },
+        { "id": "o2", "time": 1821, "type": "don" },
+        { "id": "o3", "time": 1928, "type": "ka" },
+        { "id": "o4", "time": 2036, "type": "don" },
+        { "id": "o5", "time": 2143, "type": "don" }
+      ]
+    }
+  }
+}

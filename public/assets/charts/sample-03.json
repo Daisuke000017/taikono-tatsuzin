@@ -1,0 +1,95 @@
+{
+  "id": "sample-03",
+  "title": "サンプル曲 3",
+  "artist": "Happy Pop",
+  "bpm": 180,
+  "offset": 0,
+  "audioFile": "/assets/audio/sample-03.mp3",
+  "coverImage": "/assets/images/cover-03.svg",
+  "difficulties": {
+    "easy": {
+      "level": 2,
+      "maxCombo": 45,
+      "notes": [
+        { "id": "e1", "time": 1333, "type": "don" },
+        { "id": "e2", "time": 2000, "type": "ka" },
+        { "id": "e3", "time": 2667, "type": "don" },
+        { "id": "e4", "time": 3333, "type": "don" },
+        { "id": "e5", "time": 4000, "type": "ka" },
+        { "id": "e6", "time": 4667, "type": "don" },
+        { "id": "e7", "time": 5333, "type": "ka" },
+        { "id": "e8", "time": 6000, "type": "don" },
+        { "id": "e9", "time": 6667, "type": "ka" },
+        { "id": "e10", "time": 7333, "type": "don" },
+        { "id": "e11", "time": 8000, "type": "don" },
+        { "id": "e12", "time": 8667, "type": "ka" },
+        { "id": "e13", "time": 9333, "type": "don" },
+        { "id": "e14", "time": 10000, "type": "ka" },
+        { "id": "e15", "time": 10667, "type": "don" },
+        { "id": "e16", "time": 11333, "type": "don" },
+        { "id": "e17", "time": 12000, "type": "ka" },
+        { "id": "e18", "time": 12667, "type": "don" },
+        { "id": "e19", "time": 13333, "type": "ka" },
+        { "id": "e20", "time": 14000, "type": "don" },
+        { "id": "e21", "time": 14667, "type": "don" },
+        { "id": "e22", "time": 15333, "type": "ka" },
+        { "id": "e23", "time": 16000, "type": "don" },
+        { "id": "e24", "time": 16667, "type": "ka" },
+        { "id": "e25", "time": 17333, "type": "don" },
+        { "id": "e26", "time": 18000, "type": "don" },
+        { "id": "e27", "time": 18667, "type": "ka" },
+        { "id": "e28", "time": 19333, "type": "don" },
+        { "id": "e29", "time": 20000, "type": "ka" },
+        { "id": "e30", "time": 20667, "type": "don" },
+        { "id": "e31", "time": 21333, "type": "don" },
+        { "id": "e32", "time": 22000, "type": "ka" },
+        { "id": "e33", "time": 22667, "type": "don" },
+        { "id": "e34", "time": 23333, "type": "ka" },
+        { "id": "e35", "time": 24000, "type": "don" },
+        { "id": "e36", "time": 24667, "type": "don" },
+        { "id": "e37", "time": 25333, "type": "ka" },
+        { "id": "e38", "time": 26000, "type": "don" },
+        { "id": "e39", "time": 26667, "type": "ka" },
+        { "id": "e40", "time": 27333, "type": "don" },
+        { "id": "e41", "time": 28000, "type": "don" },
+        { "id": "e42", "time": 28667, "type": "ka" },
+        { "id": "e43", "time": 29333, "type": "don" },
+        { "id": "e44", "time": 30000, "type": "ka" },
+        { "id": "e45", "time": 30667, "type": "don" }
+      ]
+    },
+    "normal": {
+      "level": 4,
+      "maxCombo": 90,
+      "notes": [
+        { "id": "n1", "time": 1333, "type": "don" },
+        { "id": "n2", "time": 1667, "type": "don" },
+        { "id": "n3", "time": 2000, "type": "ka" },
+        { "id": "n4", "time": 2333, "type": "don" },
+        { "id": "n5", "time": 2667, "type": "don" }
+      ]
+    },
+    "hard": {
+      "level": 7,
+      "maxCombo": 170,
+      "notes": [
+        { "id": "h1", "time": 1333, "type": "don" },
+        { "id": "h2", "time": 1500, "type": "don" },
+        { "id": "h3", "time": 1667, "type": "ka" },
+        { "id": "h4", "time": 1833, "type": "don" },
+        { "id": "h5", "time": 2000, "type": "don" }
+      ]
+    },
+    "oni": {
+      "level": 9,
+      "maxCombo": 280,
+      "notes": [
+        { "id": "o1", "time": 1333, "type": "don" },
+        { "id": "o2", "time": 1417, "type": "don" },
+        { "id": "o3", "time": 1500, "type": "ka" },
+        { "id": "o4", "time": 1583, "type": "don" },
+        { "id": "o5", "time": 1667, "type": "don" }
+      ]
+    }
+  }
+}

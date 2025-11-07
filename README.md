@@ -8,11 +8,12 @@
 
 ## ✨ 機能
 
+- **3つの楽曲**: カバー画像付きの多様な楽曲
 - **4つの難易度**: かんたん、ふつう、むずかしい、おに
 - **リアルタイム判定システム**: Perfect、Good、Miss
 - **コンボシステム**: 連続ヒットでスコア倍率アップ
-- **ランキング機能**: LocalStorageでスコアを保存
-- **SVGベースのUI**: 軽量でスケーラブルなデザイン
+- **ランキング機能**: 楽曲・難易度別のトップ10表示
+- **SVGベースのUI**: 美しいカバー画像とスケーラブルなデザイン
 - **Web Audio API**: リアルタイム音声再生
 
 ## 🛠️ 技術スタック
@@ -159,11 +160,14 @@ export const DIFFICULTY_CONFIGS = {
 
 ## 🎵 音楽素材について
 
-プロトタイプでは音声ファイルが含まれていません。以下のサイトから著作権フリーの音楽を利用できます：
+プロトタイプでは音声ファイルが含まれていません。詳しい音楽ファイルの配置方法は **[AUDIO_GUIDE.md](./AUDIO_GUIDE.md)** をご覧ください。
 
+### 推奨サイト
 - [DOVA-SYNDROME](https://dova-s.jp/)
 - [魔王魂](https://maou.audio/)
-- [freesound.org](https://freesound.org/)
+- [甘茶の音楽工房](https://amachamusic.chagasi.com/)
+- [Freesound](https://freesound.org/)
+- [Incompetech](https://incompetech.com/music/)
 
 ## 📄 ライセンス
 
