@@ -11,9 +11,12 @@ import Drum from '@/components/game/Drum';
 import NoteComponent from '@/components/game/NoteComponent';
 import ScoreDisplay from '@/components/game/ScoreDisplay';
 import JudgementDisplay from '@/components/game/JudgementDisplay';
+import JudgementLine from '@/components/game/JudgementLine';
 import PauseMenu from '@/components/game/PauseMenu';
 import HitEffect from '@/components/game/HitEffect';
 import ComboMilestoneEffect from '@/components/game/ComboMilestoneEffect';
+import AnimatedBackground from '@/components/ui/AnimatedBackground';
+import SakuraPetals from '@/components/ui/SakuraPetals';
 import { Song, Difficulty, GameState, NoteType } from '@/types/game';
 import { GAME_CONFIG } from '@/constants/gameConfig';
 
@@ -186,10 +189,16 @@ function GamePageContent() {
 
   return (
     <div className="min-h-screen overflow-hidden relative">
+      {/* アニメーション背景 */}
+      <AnimatedBackground />
+
+      {/* 桜の花びら */}
+      <SakuraPetals />
+
       {/* ホームに戻るボタン */}
       <button
         onClick={handleBackToHome}
-        className="absolute top-4 left-4 z-50 bg-black/70 hover:bg-black/90 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+        className="absolute top-4 left-4 z-50 bg-gradient-to-br from-red-900/90 via-red-800/90 to-red-900/90 hover:from-red-800 hover:via-red-700 hover:to-red-800 text-white px-6 py-3 rounded-xl flex items-center gap-2 transition-all duration-300 shadow-lg hover:shadow-red-500/50 border-2 border-red-700/50 backdrop-blur-md hover:scale-105"
         aria-label="ホームに戻る"
       >
         <svg
@@ -199,14 +208,14 @@ function GamePageContent() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         >
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
           <polyline points="9 22 9 12 15 12 15 22" />
         </svg>
-        <span className="text-sm font-bold">ホーム</span>
+        <span className="text-sm font-bold tracking-wider">ホーム</span>
       </button>
 
       {/* スコア表示 */}
@@ -214,6 +223,17 @@ function GamePageContent() {
 
       {/* ゲームエリア */}
       <div className="h-screen flex items-center relative">
+        {/* 判定ライン */}
+        <div
+          className="absolute z-10"
+          style={{
+            left: `${GAME_CONFIG.DRUM_POSITION_X}px`,
+            transform: 'translateX(-50%)',
+          }}
+        >
+          <JudgementLine />
+        </div>
+
         {/* 太鼓 */}
         <div
           className="absolute z-20"
@@ -256,19 +276,23 @@ function GamePageContent() {
       </div>
 
       {/* キー説明 */}
-      <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2 text-white">
-        <div className="flex gap-8">
-          <div className="bg-black/50 px-6 py-3 rounded-lg">
-            <div className="text-don font-bold text-xl mb-1">ドン</div>
-            <div className="text-sm">[F] [J]</div>
+      <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-3 text-white z-30">
+        <div className="flex gap-6">
+          <div className="bg-gradient-to-br from-red-900/80 to-red-800/80 backdrop-blur-md px-8 py-4 rounded-2xl border-2 border-red-500/50 shadow-lg hover:scale-105 transition-transform">
+            <div className="text-don font-black text-2xl mb-2 drop-shadow-lg" style={{ textShadow: '0 0 10px rgba(255, 68, 68, 0.8)' }}>ドン</div>
+            <div className="text-sm font-bold bg-black/30 px-3 py-1 rounded-lg">[F] [J]</div>
           </div>
-          <div className="bg-black/50 px-6 py-3 rounded-lg">
-            <div className="text-ka font-bold text-xl mb-1">カッ</div>
-            <div className="text-sm">[D] [K]</div>
+          <div className="bg-gradient-to-br from-blue-900/80 to-blue-800/80 backdrop-blur-md px-8 py-4 rounded-2xl border-2 border-blue-500/50 shadow-lg hover:scale-105 transition-transform">
+            <div className="text-ka font-black text-2xl mb-2 drop-shadow-lg" style={{ textShadow: '0 0 10px rgba(68, 136, 255, 0.8)' }}>カッ</div>
+            <div className="text-sm font-bold bg-black/30 px-3 py-1 rounded-lg">[D] [K]</div>
           </div>
         </div>
-        <div className="bg-black/50 px-4 py-2 rounded-lg text-xs opacity-80">
-          🎮 ゲームパッド対応 | ドン: A/B/下/L1 | カッ: X/Y/上/R1
+        <div className="bg-black/60 backdrop-blur-md px-6 py-3 rounded-xl text-xs border border-white/20 shadow-lg">
+          <span className="text-yellow-400 font-bold">🎮 ゲームパッド対応</span>
+          <span className="mx-2 text-white/50">|</span>
+          <span className="text-don font-semibold">ドン: A/B/下/L1</span>
+          <span className="mx-2 text-white/50">|</span>
+          <span className="text-ka font-semibold">カッ: X/Y/上/R1</span>
         </div>
       </div>
 
