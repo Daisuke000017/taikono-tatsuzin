@@ -15,6 +15,7 @@ export class GameEngine {
   private currentNoteIndex: number = 0;
   private activeNotes: Set<string> = new Set();
   private processedNotes: Set<string> = new Set();
+  private rollNoteHits: Map<string, number> = new Map(); // 連打ノーツのヒット数を追跡
 
   constructor(notes: Note[], difficulty: Difficulty) {
     this.notes = [...notes].sort((a, b) => a.time - b.time);
@@ -32,7 +33,11 @@ export class GameEngine {
 
     for (const note of this.notes) {
       const spawnAt = note.time - spawnTime;
-      const expireAt = note.time + config.timingWindow.good;
+
+      // 連打ノーツの場合、終了時刻まで表示
+      const expireAt = note.type === 'don-roll' && note.endTime
+        ? note.endTime
+        : note.time + config.timingWindow.good;
 
       if (currentTime >= spawnAt && currentTime <= expireAt) {
         active.push(note);
@@ -63,6 +68,29 @@ export class GameEngine {
   ): JudgementResult | null {
     const config = DIFFICULTY_CONFIGS[this.difficulty];
 
+    // 連打ノーツのチェック（'don'入力の場合のみ）
+    if (noteType === 'don') {
+      for (const note of this.notes) {
+        if (note.type === 'don-roll' && note.endTime) {
+          // 連打ノーツがアクティブかチェック
+          if (currentTime >= note.time && currentTime <= note.endTime) {
+            // 連打ヒット数をカウント
+            const hits = (this.rollNoteHits.get(note.id) || 0) + 1;
+            this.rollNoteHits.set(note.id, hits);
+
+            // 連打ノーツはコンボに影響しないが、小さいスコアを返す
+            return {
+              type: 'perfect',
+              timing: 0,
+              score: 100, // 連打1回あたりのスコア
+              combo: gameState.combo, // コンボは維持
+            };
+          }
+        }
+      }
+    }
+
+    // 通常ノーツの判定
     // 未処理のノーツから最も近いものを検索
     let closestNote: Note | null = null;
     let closestTiming = Infinity;
@@ -70,6 +98,9 @@ export class GameEngine {
     for (const note of this.notes) {
       // 既に処理済みならスキップ
       if (this.processedNotes.has(note.id)) continue;
+
+      // 連打ノーツはスキップ
+      if (note.type === 'don-roll') continue;
 
       // タイプが一致しない場合はスキップ
       if (note.type !== noteType) continue;
@@ -135,7 +166,15 @@ export class GameEngine {
       // 既に処理済みならスキップ
       if (this.processedNotes.has(note.id)) continue;
 
-      // 判定ウィンドウを過ぎたか確認
+      // 連打ノーツの場合、終了時刻を過ぎたら処理済みにするが、ミスにはしない
+      if (note.type === 'don-roll' && note.endTime) {
+        if (currentTime > note.endTime) {
+          this.processedNotes.add(note.id);
+        }
+        continue; // 連打ノーツはミスにならない
+      }
+
+      // 通常ノーツ: 判定ウィンドウを過ぎたか確認
       if (currentTime > note.time + config.timingWindow.good) {
         this.processedNotes.add(note.id);
         missed.push(note);
@@ -154,8 +193,13 @@ export class GameEngine {
 
     if (!lastNote) return true;
 
-    // 最後のノーツの判定ウィンドウが過ぎたか
-    return currentTime > lastNote.time + config.timingWindow.good + 1000;
+    // 連打ノーツの場合は終了時刻を使用
+    const endTime = lastNote.type === 'don-roll' && lastNote.endTime
+      ? lastNote.endTime
+      : lastNote.time + config.timingWindow.good;
+
+    // 最後のノーツの判定ウィンドウ（または連打終了時刻）が過ぎたか
+    return currentTime > endTime + 1000;
   }
 
   /**

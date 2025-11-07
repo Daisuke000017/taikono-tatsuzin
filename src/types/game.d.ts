@@ -2,7 +2,7 @@
 
 export type Difficulty = 'easy' | 'normal' | 'hard' | 'oni';
 
-export type NoteType = 'don' | 'ka';
+export type NoteType = 'don' | 'ka' | 'don-roll';
 
 export type JudgementType = 'perfect' | 'good' | 'miss';
 
@@ -11,6 +11,7 @@ export interface Note {
   time: number; // ミリ秒
   type: NoteType;
   lane?: number; // 将来的な複数レーン対応
+  endTime?: number; // 連打ノーツの終了時間（ミリ秒）- don-rollの場合のみ
 }
 
 export interface DifficultyData {
