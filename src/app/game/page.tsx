@@ -6,6 +6,7 @@ import { GameEngine } from '@/lib/gameEngine';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
 import { useGameLoop } from '@/hooks/useGameLoop';
 import { useInputHandler } from '@/hooks/useInputHandler';
+import { useGamepadInput } from '@/hooks/useGamepadInput';
 import Drum from '@/components/game/Drum';
 import NoteComponent from '@/components/game/NoteComponent';
 import ScoreDisplay from '@/components/game/ScoreDisplay';
@@ -93,7 +94,11 @@ function GamePageContent() {
     router.push('/');
   };
 
+  // キーボード入力
   useInputHandler(handleInput);
+
+  // ゲームパッド入力（標準コントローラー + 太鼓コントローラー対応）
+  useGamepadInput(handleInput);
 
   // ゲーム開始
   useEffect(() => {
@@ -192,14 +197,19 @@ function GamePageContent() {
       </div>
 
       {/* キー説明 */}
-      <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-8 text-white">
-        <div className="bg-black/50 px-6 py-3 rounded-lg">
-          <div className="text-don font-bold text-xl mb-1">ドン</div>
-          <div className="text-sm">[F] [J]</div>
+      <div className="absolute bottom-8 left-0 right-0 flex flex-col items-center gap-2 text-white">
+        <div className="flex gap-8">
+          <div className="bg-black/50 px-6 py-3 rounded-lg">
+            <div className="text-don font-bold text-xl mb-1">ドン</div>
+            <div className="text-sm">[F] [J]</div>
+          </div>
+          <div className="bg-black/50 px-6 py-3 rounded-lg">
+            <div className="text-ka font-bold text-xl mb-1">カッ</div>
+            <div className="text-sm">[D] [K]</div>
+          </div>
         </div>
-        <div className="bg-black/50 px-6 py-3 rounded-lg">
-          <div className="text-ka font-bold text-xl mb-1">カッ</div>
-          <div className="text-sm">[D] [K]</div>
+        <div className="bg-black/50 px-4 py-2 rounded-lg text-xs opacity-80">
+          🎮 ゲームパッド対応 | ドン: A/B/下/L1 | カッ: X/Y/上/R1
         </div>
       </div>
     </div>
